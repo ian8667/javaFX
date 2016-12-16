@@ -11,6 +11,7 @@ import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
@@ -110,19 +111,19 @@ private static String windowTitle;
     private Button createButton() {
 
       // Create the button.
-      btn = new Button("button99");
-      // Set the X, Y position of the button.
+      Button btn = new Button("button99");
+      Tooltip btntip = new Tooltip("My sample button");
       btn.setLayoutX(40.0d);
       btn.setLayoutY(110.0d);
-
-      //btn.setText("Hello button 99");
+      btn.setText("hello world");
       btn.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello world, this is coreJavafx");
-            }
-        });
+          @Override
+          public void handle(ActionEvent event) {
+              System.out.println("Hello World, this is coreJavafx");
+          }
+      });
+      btn.setTooltip(btntip);
 
       return btn;
     }
@@ -180,7 +181,7 @@ private static String windowTitle;
        closingMsg = "Stage is closing now";
        System.out.println("Hello World, this is method init but I dont really do anthing");
 
-       windowSize = new Dimension2D(350.0d, 216.0d);  // width, height
+       windowSize = new Dimension2D(350.0, 216.0);  // width, height
        btn = this.createButton();
     }
 
