@@ -111,6 +111,10 @@ private static String windowTitle;
 
       // Create the button.
       btn = new Button("button99");
+      // Set the X, Y position of the button.
+      btn.setLayoutX(40.0d);
+      btn.setLayoutY(110.0d);
+
       //btn.setText("Hello button 99");
       btn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -176,7 +180,7 @@ private static String windowTitle;
        closingMsg = "Stage is closing now";
        System.out.println("Hello World, this is method init but I dont really do anthing");
 
-       windowSize = new Dimension2D(350.0, 216.0);  // width, height
+       windowSize = new Dimension2D(350.0d, 216.0d);  // width, height
        btn = this.createButton();
     }
 
