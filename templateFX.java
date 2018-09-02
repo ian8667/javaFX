@@ -9,7 +9,7 @@ import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.scene.paint.Color;
 /**
- * <p>A learning file to practice my JavaFX.</p>
+ * <p>A template file as I learn to practice my JavaFX.</p>
  *
  *-------------------------------------------------
  *
@@ -41,10 +41,10 @@ import javafx.scene.paint.Color;
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)TemplateJavafx02.java        1.01 2018-09-02
+ * @version (#)templateFX.java        1.01 2018-09-02
  * Keywords: javafx java template
  */
-public class TemplateJavafx02 extends Application {
+public class templateFX extends Application {
 private static String closingMsg;
     /**
      * The main entry point for all JavaFX applications. The start method
