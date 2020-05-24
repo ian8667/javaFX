@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.application.Platform;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 //
 // Additional import statements below this line
 //
@@ -50,55 +51,11 @@ import java.io.IOException;
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.03 2020-05-21T17:34:51
+ * @version (#)coreJavafx.java        1.04 2020-05-23T17:11:02
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
 private static String closingMsg;
-    /**
-     * Do some work here!
-     *
-     * The main entry point for all JavaFX applications. The start method
-     * is called after the init method has returned, and after the system
-     * is ready for the application to begin running.
-     */
-    @Override
-    public void start(Stage primaryStage) {
-primaryStage.setTitle("My first javafx app");
-Font myfont = Font.font("Arial", 12);
-Label lbl = new Label("hello world from label");
-lbl.setFont(new Font("Segoe Print", 12));
-//lbl.setFont(myfont);
-lbl.setAlignment(Pos.CENTER_LEFT);
-Scene sce = new Scene(lbl, 400.0, 200.0);
-primaryStage.setScene(sce);
-primaryStage.show();
-
-List<String> fontlist = new ArrayList<String>();
-fontlist = Font.getFamilies();
-// Create an output file to write the font names to
-Path ian = FileSystems.getDefault().getPath("C:\\Gash", "ian.ian");
-Charset ascii = StandardCharsets.US_ASCII;
-OpenOption[] myoptions =
-    new OpenOption[] {StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING};
-
-try (BufferedWriter buffrite = Files.newBufferedWriter(ian, ascii, myoptions);) {
-
-for (String item : fontlist) {
-    System.out.println(item);
-    buffrite.write(item, 0, item.length());
-    buffrite.newLine();
-}
-	
-} catch (IOException e) {
-  e.printStackTrace();	 
-}
-
-    System.out.println("end of script");
-    LocalTime tt = LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
-    System.out.printf("%s%n", tt);
-
-    }//end of start
 
     /**
      * Method init.
@@ -115,13 +72,66 @@ for (String item : fontlist) {
      * in this method. An application may construct other JavaFX
      * objects in this method.
      *
-     * We can leave this method out if we wish to. ie ignore it altogether.
+     * See also method 'init()' of class javafx.application.Application.
      */
     @Override
     public void init() throws Exception {
        LocalTime tt = LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
        closingMsg = String.format("Stage is closing now at %s%n", tt);
-    }
+    }//end of method init
+
+    /**
+     * Method start.
+     * Do some work here!
+     *
+     * The main entry point for all JavaFX applications. The start
+     * method is called after the init method has returned, and
+     * after the system is ready for the application to begin running.
+     *
+     * The JavaFX Stage class is the top level JavaFX container.
+     * The primary Stage is constructed by the platform. Additional
+     * Stage objects may be constructed by the application.
+     *
+     * See also method 'start(Stage primaryStage)' of class javafx.application.Application.
+     */
+    @Override
+    public void start(Stage primaryStage) {
+    primaryStage.setTitle("My first javafx app");
+    primaryStage.setOnCloseRequest((event) -> System.out.println("Closing on request"));
+
+    //root - The root node (parent) of the scene graph
+    //width - The width of the scene (double)
+    //height - The height of the scene (double)
+    Scene sce = new Scene(lbl, 400.0, 200.0);
+
+    primaryStage.setScene(sce);
+    primaryStage.show();
+
+List<String> fontlist = new ArrayList<String>();
+fontlist = Font.getFamilies();
+// Create an output file to write the font names to
+Path ian = FileSystems.getDefault().getPath("C:\\Gash", "ian.ian");
+Charset ascii = StandardCharsets.US_ASCII;
+OpenOption[] myoptions =
+    new OpenOption[] {StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING};
+
+try (BufferedWriter buffrite = Files.newBufferedWriter(ian, ascii, myoptions);) {
+
+for (String item : fontlist) {
+    System.out.println(item);
+    buffrite.write(item, 0, item.length());
+    buffrite.newLine();
+}
+
+} catch (IOException e) {
+  e.printStackTrace();
+}
+
+    System.out.println("end of script");
+    LocalTime tt = LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
+    System.out.printf("%s%n", tt);
+
+    }//end of method start
 
     /**
      * Method stop.
@@ -130,21 +140,27 @@ for (String item : fontlist) {
      * and destroy resources.
      *
      * We could have some clean up code here.
+     *
+     * See also method 'stop()' of class javafx.application.Application.
      */
     @Override
     public void stop() throws Exception {
 
         System.out.println(closingMsg);
-
+        // Causes the JavaFX application to terminate.
         Platform.exit();
-    }
+    }//end of method stop
 
     /**
      * main
-     * @param args
+     * @param args - the command line arguments passed to the
+     * application. An application may get these parameters
+     * using the 'Application.getParameters()' method and may
+     * be called in the init() method or any time after that.
      */
     public static void main(final String[] args) {
     //public static void main(String[] args) {
+        Locale.setDefault(Locale.UK);
         Application.launch(args);
     }//end of main
 }//end of class
