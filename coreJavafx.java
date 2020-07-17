@@ -6,23 +6,19 @@ import javafx.application.Platform;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
+import javafx.scene.Group;
 //
 // Additional import statements below this line
 //
-import javafx.scene.control.Label;
-import javafx.geometry.Pos;
-import java.util.List;
-import java.util.ArrayList;
-import javafx.scene.text.Font;
-import java.nio.file.Files;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.FileSystems;
-import java.io.BufferedWriter;
-import java.nio.file.StandardOpenOption;
-import java.nio.file.OpenOption;
-import java.nio.charset.Charset;
-import java.io.IOException;
+import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.FlowPane;
+import javafx.geometry.Orientation;
+import javafx.geometry.Insets;
+import javafx.geometry.Dimension2D;
+import javafx.scene.paint.Color;
+import javafx.scene.control.Button;
+
 /**
  * <p>A learning file to practice my JavaFX.</p>
  *
@@ -48,14 +44,70 @@ import java.io.IOException;
  *
  * Getting Started with JavaFX
  * https://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm
+ *
+ * Using Built-in Layout Panes
+ * This Oracle written topic describes the layout container classes,
+ * called panes, that are available with JavaFX.
+ * https://docs.oracle.com/javase/8/javafx/layout-tutorial/builtin_layouts.htm
+ * and
+ * https://docs.oracle.com/javafx/2/layout/builtin_layouts.htm
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.04 2020-05-23T17:11:02
+ * @version (#)coreJavafx.java        1.05 2020-07-16T12:11:36
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
-private static String closingMsg;
+private String closingMsg;
+private Dimension2D sceneSize;
+   /**
+    * Constructor
+    */
+    public coreJavafx() {
+      //As per 'Class Application' javadocs:
+      //The Application subclass must be declared public and
+      //must have a public no-argument constructor.
+    }//end of constructor
+
+    /**
+     * Method initUI.
+     * Create and setup the main bulk of the user interface
+     * (UI) code.
+     *
+     * @param myStage the primary stage for this application
+     * See also method 'start()'.
+     */
+    private void initUI(Stage myStage) {
+
+        Circle circ = new Circle(40, 40, 30);
+        circ.setFill(Color.DARKGOLDENROD);
+
+        Button btn = new Button("Say hello");
+        btn.setOnAction((evt) -> System.out.println("Hello FX world from button!"));
+
+FlowPane flow = new FlowPane(Orientation.HORIZONTAL);
+flow.setPadding(new Insets(10,10,10,10));
+flow.setVgap(10);
+flow.setHgap(10);
+flow.getChildren().addAll(btn, circ);
+
+    // ------------------------------------
+    // Standard application processing for
+    // the root and scene nodes.
+    // ------------------------------------
+    Group root = new Group();
+
+    root.getChildren().add(flow);
+
+    // The JavaFX Scene class is the container for all content in
+    // a scene graph. The background of the scene is filled as
+    // specified by the fill property. 
+    Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight(), Color.RED);
+    //Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight());
+    myStage.setScene(sce);
+    // ------------------------------------
+
+    }//end of method initUI
 
     /**
      * Method init.
@@ -78,6 +130,10 @@ private static String closingMsg;
     public void init() throws Exception {
        LocalTime tt = LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
        closingMsg = String.format("Stage is closing now at %s%n", tt);
+
+       // Preferred size of the Scene. Constructs a Dimension2D object
+       // with the specified width and height.
+       sceneSize = new Dimension2D(400.0, 200.0);
     }//end of method init
 
     /**
@@ -91,6 +147,10 @@ private static String closingMsg;
      * The JavaFX Stage class is the top level JavaFX container.
      * The primary Stage is constructed by the platform. Additional
      * Stage objects may be constructed by the application.
+     * @param primaryStage the primary stage for this application,
+     *        onto which the application scene can be set. Applications
+     *        may create other stages, if needed, but they will not be
+     *        primary stages
      *
      * See also method 'start(Stage primaryStage)' of class javafx.application.Application.
      */
@@ -99,37 +159,10 @@ private static String closingMsg;
     primaryStage.setTitle("My first javafx app");
     primaryStage.setOnCloseRequest((event) -> System.out.println("Closing on request"));
 
-    //root - The root node (parent) of the scene graph
-    //width - The width of the scene (double)
-    //height - The height of the scene (double)
-    Scene sce = new Scene(lbl, 400.0, 200.0);
+    initUI(primaryStage);
 
-    primaryStage.setScene(sce);
+    primaryStage.centerOnScreen();
     primaryStage.show();
-
-List<String> fontlist = new ArrayList<String>();
-fontlist = Font.getFamilies();
-// Create an output file to write the font names to
-Path ian = FileSystems.getDefault().getPath("C:\\Gash", "ian.ian");
-Charset ascii = StandardCharsets.US_ASCII;
-OpenOption[] myoptions =
-    new OpenOption[] {StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING};
-
-try (BufferedWriter buffrite = Files.newBufferedWriter(ian, ascii, myoptions);) {
-
-for (String item : fontlist) {
-    System.out.println(item);
-    buffrite.write(item, 0, item.length());
-    buffrite.newLine();
-}
-
-} catch (IOException e) {
-  e.printStackTrace();
-}
-
-    System.out.println("end of script");
-    LocalTime tt = LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
-    System.out.printf("%s%n", tt);
 
     }//end of method start
 
