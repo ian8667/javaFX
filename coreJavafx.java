@@ -12,15 +12,16 @@ import javafx.scene.paint.Color;
 //
 // Additional import statements below this line
 //
-import javafx.scene.control.DatePicker;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import java.io.File;
 import javafx.scene.layout.HBox;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Set;
+import javafx.scene.layout.FlowPane;
 
 /**
  * <p>A learning file to practice my JavaFX.</p>
  *
+ * hbox.getChildren().addAll(new Label("Name:), new TextBox());
  *-------------------------------------------------
  *
  * JDK 14 Documentation
@@ -53,7 +54,7 @@ import java.util.Set;
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.06 2020-07-17T15:09:39
+ * @version (#)coreJavafx.java        1.07 2020-07-17T18:22:06
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
@@ -83,22 +84,19 @@ private Dimension2D sceneSize;
     // user interface goes here
     // ------------------------------------
 
-ZoneId ldn = ZoneId.of("Europe/Isle_of_Man");
-Set<String> zoneIds= ZoneId.getAvailableZoneIds();
-zoneIds.stream()
-       .sorted()
-       .forEach(System.out::println);
+HBox mybox = new HBox();
 
-System.out.println("");
-LocalDate mydate = LocalDate.now(ldn);
-int yy = mydate.getYear();
- System.out.printf("The year is now %s%n", yy);
+FileChooser fchoose = new FileChooser();
+fchoose.setInitialDirectory(new File("C:\\gash"));
+fchoose.setTitle("Test file choose");
+fchoose.getExtensionFilters().addAll(
+         new ExtensionFilter("Text Files", "*.txt"),
+         new ExtensionFilter("All Files", "*.*")
+);
 
-DatePicker dPicker = new DatePicker();
-dPicker.setShowWeekNumbers(true);
 
-    HBox mybox = new HBox(dPicker);
-
+File selectedFile = fchoose.showOpenDialog(new Stage());
+System.out.printf("File selected: %s%n", selectedFile.getAbsolutePath());
     // ------------------------------------
     // Standard application processing for
     // the root and scene nodes.
