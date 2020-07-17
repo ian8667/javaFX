@@ -7,17 +7,16 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import javafx.scene.Group;
+import javafx.geometry.Dimension2D;
+import javafx.scene.paint.Color;
 //
 // Additional import statements below this line
 //
-import javafx.scene.shape.Circle;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.FlowPane;
-import javafx.geometry.Orientation;
-import javafx.geometry.Insets;
-import javafx.geometry.Dimension2D;
-import javafx.scene.paint.Color;
-import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.layout.HBox;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Set;
 
 /**
  * <p>A learning file to practice my JavaFX.</p>
@@ -54,7 +53,7 @@ import javafx.scene.control.Button;
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.05 2020-07-16T12:11:36
+ * @version (#)coreJavafx.java        1.06 2020-07-17T15:09:39
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
@@ -79,17 +78,26 @@ private Dimension2D sceneSize;
      */
     private void initUI(Stage myStage) {
 
-        Circle circ = new Circle(40, 40, 30);
-        circ.setFill(Color.DARKGOLDENROD);
+    // ------------------------------------
+    // User written code to construct the UI
+    // user interface goes here
+    // ------------------------------------
 
-        Button btn = new Button("Say hello");
-        btn.setOnAction((evt) -> System.out.println("Hello FX world from button!"));
+ZoneId ldn = ZoneId.of("Europe/Isle_of_Man");
+Set<String> zoneIds= ZoneId.getAvailableZoneIds();
+zoneIds.stream()
+       .sorted()
+       .forEach(System.out::println);
 
-FlowPane flow = new FlowPane(Orientation.HORIZONTAL);
-flow.setPadding(new Insets(10,10,10,10));
-flow.setVgap(10);
-flow.setHgap(10);
-flow.getChildren().addAll(btn, circ);
+System.out.println("");
+LocalDate mydate = LocalDate.now(ldn);
+int yy = mydate.getYear();
+ System.out.printf("The year is now %s%n", yy);
+
+DatePicker dPicker = new DatePicker();
+dPicker.setShowWeekNumbers(true);
+
+    HBox mybox = new HBox(dPicker);
 
     // ------------------------------------
     // Standard application processing for
@@ -97,12 +105,12 @@ flow.getChildren().addAll(btn, circ);
     // ------------------------------------
     Group root = new Group();
 
-    root.getChildren().add(flow);
+    root.getChildren().add(mybox);
 
     // The JavaFX Scene class is the container for all content in
     // a scene graph. The background of the scene is filled as
     // specified by the fill property. 
-    Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight(), Color.RED);
+    Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight(), Color.CADETBLUE);
     //Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight());
     myStage.setScene(sce);
     // ------------------------------------
