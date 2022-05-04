@@ -17,18 +17,24 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import java.io.File;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.control.DatePicker;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 
 /**
  * <p>A learning file to practice my JavaFX.</p>
  *
  * hbox.getChildren().addAll(new Label("Name:), new TextBox());
- *-------------------------------------------------
+ *-----------------------------------------------
  *
- * JDK 14 Documentation
- * https://docs.oracle.com/en/java/javase/14/
+ * JDK 18 Documentation
+ * https://docs.oracle.com/en/java/javase/18/
+ *
+ * Java SE Version 18 API docs
+ * https://docs.oracle.com/en/java/javase/18/docs/api/index.html
  *
  * JavaFX API docs
- * https://openjfx.io/javadoc/14/
+ * https://openjfx.io/javadoc/18/
  *
  * Introduction to FXML
  * This document introduces the FXML markup language and explains
@@ -37,6 +43,17 @@ import javafx.scene.layout.FlowPane;
  *
  * Java Platform, Standard Edition (Java SE) 8 (and notes).
  * https://docs.oracle.com/javase/8/javase-clienttechnologies.htm
+ *
+ * Class Point (module java.desktop)
+ * java.awt.Point
+ * A point representing a location in (x,y) coordinate space,
+ * specified in integer precision.
+ *
+ * Class Dimension2D (module javafx.graphics)
+ * javafx.geometry.Dimension2D
+ * A 2D dimension object that contains a width and a height,
+ * specified in double precision.
+ *
  *-------------------------------------------------
  * Learning:
  * Complete javafx tutorials for beginners
@@ -54,7 +71,7 @@ import javafx.scene.layout.FlowPane;
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.07 2020-07-17T18:22:06
+ * @version (#)coreJavafx.java        1.11 2022-05-04T16:10:47
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
@@ -84,19 +101,13 @@ private Dimension2D sceneSize;
     // user interface goes here
     // ------------------------------------
 
-HBox mybox = new HBox();
-
-FileChooser fchoose = new FileChooser();
-fchoose.setInitialDirectory(new File("C:\\gash"));
-fchoose.setTitle("Test file choose");
-fchoose.getExtensionFilters().addAll(
-         new ExtensionFilter("Text Files", "*.txt"),
-         new ExtensionFilter("All Files", "*.*")
-);
-
-
-File selectedFile = fchoose.showOpenDialog(new Stage());
-System.out.printf("File selected: %s%n", selectedFile.getAbsolutePath());
+DatePicker dpick = new DatePicker();
+HBox mybox = new HBox(dpick);
+Text txt = new Text();
+txt.setText("hello world");
+txt.setFont(new Font(16));
+txt.setX(35.0);
+txt.setY(75.0);
     // ------------------------------------
     // Standard application processing for
     // the root and scene nodes.
@@ -104,10 +115,11 @@ System.out.printf("File selected: %s%n", selectedFile.getAbsolutePath());
     Group root = new Group();
 
     root.getChildren().add(mybox);
+    root.getChildren().add(txt);
 
     // The JavaFX Scene class is the container for all content in
     // a scene graph. The background of the scene is filled as
-    // specified by the fill property. 
+    // specified by the fill property.
     Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight(), Color.CADETBLUE);
     //Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight());
     myStage.setScene(sce);
@@ -162,13 +174,13 @@ System.out.printf("File selected: %s%n", selectedFile.getAbsolutePath());
      */
     @Override
     public void start(Stage primaryStage) {
-    primaryStage.setTitle("My first javafx app");
-    primaryStage.setOnCloseRequest((event) -> System.out.println("Closing on request"));
+      primaryStage.setTitle("My first javafx app");
+      primaryStage.setOnCloseRequest((event) -> System.out.println("Closing on request"));
 
-    initUI(primaryStage);
+      initUI(primaryStage);
 
-    primaryStage.centerOnScreen();
-    primaryStage.show();
+      primaryStage.centerOnScreen();
+      primaryStage.show();
 
     }//end of method start
 
@@ -202,5 +214,6 @@ System.out.printf("File selected: %s%n", selectedFile.getAbsolutePath());
         Locale.setDefault(Locale.UK);
         Application.launch(args);
     }//end of main
+
 }//end of class
 
