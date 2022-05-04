@@ -72,7 +72,7 @@ import java.time.LocalDate;
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.12 2022-05-04T18:27:16
+ * @version (#)coreJavafx.java        1.13 2022-05-04T21:44:21
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
@@ -104,6 +104,11 @@ private Dimension2D sceneSize;
 
 DatePicker dpick = new DatePicker();
 dpick.setValue(LocalDate.now());
+dpick.setOnAction(event -> {
+   LocalDate dd = dpick.getValue();
+   System.out.println("Selected date: " + dd);
+});
+
 HBox mybox = new HBox(dpick);
 Text txt = new Text();
 txt.setText("hello world");
