@@ -20,6 +20,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.control.DatePicker;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import java.time.LocalDate;
 
 /**
  * <p>A learning file to practice my JavaFX.</p>
@@ -71,7 +72,7 @@ import javafx.scene.text.Font;
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.11 2022-05-04T16:10:47
+ * @version (#)coreJavafx.java        1.12 2022-05-04T18:27:16
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
@@ -102,6 +103,7 @@ private Dimension2D sceneSize;
     // ------------------------------------
 
 DatePicker dpick = new DatePicker();
+dpick.setValue(LocalDate.now());
 HBox mybox = new HBox(dpick);
 Text txt = new Text();
 txt.setText("hello world");
