@@ -12,15 +12,8 @@ import javafx.scene.paint.Color;
 //
 // Additional import statements below this line
 //
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import java.io.File;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.control.DatePicker;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
-import java.time.LocalDate;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 /**
  * <p>A learning file to practice my JavaFX.</p>
@@ -69,10 +62,13 @@ import java.time.LocalDate;
  * https://docs.oracle.com/javase/8/javafx/layout-tutorial/builtin_layouts.htm
  * and
  * https://docs.oracle.com/javafx/2/layout/builtin_layouts.htm
+ *
+ * Java Tutorial
+ * https://www.w3schools.com/java/default.asp
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.13 2022-05-04T21:44:21
+ * @version (#)coreJavafx.java        1.14 2023-01-24T14:20:46
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
@@ -95,34 +91,38 @@ private Dimension2D sceneSize;
      * @param myStage the primary stage for this application
      * See also method 'start()'.
      */
-    private void initUI(Stage myStage) {
+    private Stage initUI(Stage myStage) {
 
     // ------------------------------------
     // User written code to construct the UI
     // user interface goes here
     // ------------------------------------
 
-DatePicker dpick = new DatePicker();
-dpick.setValue(LocalDate.now());
-dpick.setOnAction(event -> {
-   LocalDate dd = dpick.getValue();
-   System.out.println("Selected date: " + dd);
-});
+TreeItem<String> rootItem = new TreeItem<String>("RootNode");
+rootItem.setExpanded(true);
 
-HBox mybox = new HBox(dpick);
-Text txt = new Text();
-txt.setText("hello world");
-txt.setFont(new Font(16));
-txt.setX(35.0);
-txt.setY(75.0);
+TreeItem<String> item = new TreeItem<String>("AA");
+rootItem.getChildren().add(item);
+
+item = new TreeItem<String>("BB");
+rootItem.getChildren().add(item);
+
+item = new TreeItem<String>("CC");
+rootItem.getChildren().add(item);
+
+item = new TreeItem<String>("DD");
+rootItem.getChildren().add(item);
+
+TreeView<String> tree = new TreeView<String>(rootItem);
+tree.setEditable(false);
+
     // ------------------------------------
     // Standard application processing for
     // the root and scene nodes.
     // ------------------------------------
     Group root = new Group();
 
-    root.getChildren().add(mybox);
-    root.getChildren().add(txt);
+    root.getChildren().add(tree);
 
     // The JavaFX Scene class is the container for all content in
     // a scene graph. The background of the scene is filled as
@@ -130,6 +130,9 @@ txt.setY(75.0);
     Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight(), Color.CADETBLUE);
     //Scene sce = new Scene(root, sceneSize.getWidth(), sceneSize.getHeight());
     myStage.setScene(sce);
+
+
+    return myStage;
     // ------------------------------------
 
     }//end of method initUI
@@ -184,7 +187,7 @@ txt.setY(75.0);
       primaryStage.setTitle("My first javafx app");
       primaryStage.setOnCloseRequest((event) -> System.out.println("Closing on request"));
 
-      initUI(primaryStage);
+      primaryStage = initUI(primaryStage);
 
       primaryStage.centerOnScreen();
       primaryStage.show();
