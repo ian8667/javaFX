@@ -14,6 +14,9 @@ import javafx.scene.paint.Color;
 //
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.Button;
+import javafx.geometry.Insets;
+import javafx.scene.layout.BorderPane;
 
 /**
  * <p>A learning file to practice my JavaFX.</p>
@@ -68,7 +71,7 @@ import javafx.scene.control.TreeView;
  *-------------------------------------------------
  *
  * @author Ian Molloy September 2018
- * @version (#)coreJavafx.java        1.14 2023-01-24T14:20:46
+ * @version (#)coreJavafx.java        1.15 2023-01-24T19:44:37
  * Keywords: javafx java
  */
 public class coreJavafx extends Application {
@@ -98,6 +101,13 @@ private Dimension2D sceneSize;
     // user interface goes here
     // ------------------------------------
 
+Button btn = new Button();
+btn.setText("Exit");
+btn.setOnAction((eventhandler) -> {    // lambda expression
+  System.out.println("exit button pressed, bye now");
+  Platform.exit();
+});
+
 TreeItem<String> rootItem = new TreeItem<String>("RootNode");
 rootItem.setExpanded(true);
 
@@ -120,9 +130,11 @@ tree.setEditable(false);
     // Standard application processing for
     // the root and scene nodes.
     // ------------------------------------
-    Group root = new Group();
-
-    root.getChildren().add(tree);
+    BorderPane root = new BorderPane();
+    root.setPadding(new Insets(20));
+root.setCenter(tree);
+root.setRight(btn);
+    //root.getChildren().add(tree);
 
     // The JavaFX Scene class is the container for all content in
     // a scene graph. The background of the scene is filled as
